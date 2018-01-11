@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using TesteAberturaErro.Models;
 
 namespace TesteAberturaErro
 {
@@ -22,6 +24,9 @@ namespace TesteAberturaErro
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddDbContext<TesteAberturaErroContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("TesteAberturaErroContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
