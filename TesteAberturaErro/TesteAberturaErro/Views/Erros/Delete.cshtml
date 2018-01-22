@@ -42,6 +42,12 @@
             @Html.DisplayFor(model => model.DataHora)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.Imagem)
+        </dt>
+        <dd>
+            <img src="~/uploads/@Model.Imagem" width="100" height="100" />
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Email)
         </dt>
         <dd>
@@ -50,7 +56,7 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="ID" />
+        <input type="hidden" asp-for="IdErro" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>

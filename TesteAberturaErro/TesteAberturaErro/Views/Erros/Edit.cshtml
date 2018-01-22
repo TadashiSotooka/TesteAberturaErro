@@ -1,4 +1,4 @@
-﻿@model TesteAberturaErro.Models.Erros
+﻿@model TesteAberturaErro.ViewModels.ErrosView
 
 @{
     ViewData["Title"] = "Edit";
@@ -10,43 +10,44 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdErro" />
+            <input type="hidden" asp-for="Erros.IdErro" />
             <div class="form-group">
-                <label asp-for="Titulo" class="control-label"></label>
-                <input asp-for="Titulo" class="form-control" />
-                <span asp-validation-for="Titulo" class="text-danger"></span>
+                <label asp-for="Erros.Titulo" class="control-label"></label>
+                <input asp-for="Erros.Titulo" class="form-control" />
+                <span asp-validation-for="Erros.Titulo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Severidade" class="control-label"></label>
-                <input asp-for="Severidade" class="form-control" />
-                <span asp-validation-for="Severidade" class="text-danger"></span>
+                <label asp-for="Erros.Severidade" class="control-label"></label>
+                <input asp-for="Erros.Severidade" class="form-control" />
+                <span asp-validation-for="Erros.Severidade" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Descricao" class="control-label"></label>
-                <input asp-for="Descricao" class="form-control" />
-                <span asp-validation-for="Descricao" class="text-danger"></span>
+                <label asp-for="Erros.Descricao" class="control-label"></label>
+                <input asp-for="Erros.Descricao" class="form-control" />
+                <span asp-validation-for="Erros.Descricao" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Produto" class="control-label"></label>
-                <input asp-for="Produto" class="form-control" />
-                <span asp-validation-for="Produto" class="text-danger"></span>
+                <label asp-for="Erros.Produto" class="control-label"></label>
+                <input asp-for="Erros.Produto" class="form-control" />
+                <span asp-validation-for="Erros.Produto" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DataHora" class="control-label"></label>
-                <input asp-for="DataHora" class="form-control" />
-                <span asp-validation-for="DataHora" class="text-danger"></span>
+                <label asp-for="Erros.DataHora" class="control-label"></label>
+                <input asp-for="Erros.DataHora" class="form-control" />
+                <span asp-validation-for="Erros.DataHora" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Imagem" class="control-label"></label>
-                <input asp-for="Imagem" class="form-control" />
-                <span asp-validation-for="Imagem" class="text-danger"></span>
+                <label asp-for="Erros.Imagem" class="control-label"></label>
+                <!--<input asp-for="Imagem" class="form-control" />-->
+                <input type="file" asp-for="Img" />
+                <span asp-validation-for="Erros.Imagem" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Erros.Email" class="control-label"></label>
+                <input asp-for="Erros.Email" class="form-control" />
+                <span asp-validation-for="Erros.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
