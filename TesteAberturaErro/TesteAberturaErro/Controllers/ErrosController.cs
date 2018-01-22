@@ -33,7 +33,7 @@ namespace TesteAberturaErro.Controllers
             }
 
             var erros = await _context.Erros
-                .SingleOrDefaultAsync(m => m.ID == id);
+                .SingleOrDefaultAsync(m => m.IdErro == id);
             if (erros == null)
             {
                 return NotFound();
@@ -53,10 +53,11 @@ namespace TesteAberturaErro.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Titulo,Severidade,Descricao,Produto,DataHora,Email")] Erros erros)
+        public async Task<IActionResult> Create([Bind("IdErro,Titulo,Severidade,Descricao,Produto,DataHora,Email,Imagem")] Erros erros)
         {
             if (ModelState.IsValid)
             {
+
                 _context.Add(erros);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -72,7 +73,7 @@ namespace TesteAberturaErro.Controllers
                 return NotFound();
             }
 
-            var erros = await _context.Erros.SingleOrDefaultAsync(m => m.ID == id);
+            var erros = await _context.Erros.SingleOrDefaultAsync(m => m.IdErro == id);
             if (erros == null)
             {
                 return NotFound();
@@ -85,9 +86,9 @@ namespace TesteAberturaErro.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Titulo,Severidade,Descricao,Produto,DataHora,Email")] Erros erros)
+        public async Task<IActionResult> Edit(int id, [Bind("IdErro,Titulo,Severidade,Descricao,Produto,DataHora,Email,Imagem")] Erros erros)
         {
-            if (id != erros.ID)
+            if (id != erros.IdErro)
             {
                 return NotFound();
             }
@@ -101,7 +102,7 @@ namespace TesteAberturaErro.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ErrosExists(erros.ID))
+                    if (!ErrosExists(erros.IdErro))
                     {
                         return NotFound();
                     }
@@ -124,7 +125,7 @@ namespace TesteAberturaErro.Controllers
             }
 
             var erros = await _context.Erros
-                .SingleOrDefaultAsync(m => m.ID == id);
+                .SingleOrDefaultAsync(m => m.IdErro == id);
             if (erros == null)
             {
                 return NotFound();
@@ -138,7 +139,7 @@ namespace TesteAberturaErro.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var erros = await _context.Erros.SingleOrDefaultAsync(m => m.ID == id);
+            var erros = await _context.Erros.SingleOrDefaultAsync(m => m.IdErro == id);
             _context.Erros.Remove(erros);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -146,7 +147,7 @@ namespace TesteAberturaErro.Controllers
 
         private bool ErrosExists(int id)
         {
-            return _context.Erros.Any(e => e.ID == id);
+            return _context.Erros.Any(e => e.IdErro == id);
         }
     }
 }

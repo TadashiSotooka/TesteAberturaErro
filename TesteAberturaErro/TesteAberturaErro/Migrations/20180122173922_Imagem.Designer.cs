@@ -11,9 +11,10 @@ using TesteAberturaErro.Models;
 namespace TesteAberturaErro.Migrations
 {
     [DbContext(typeof(TesteAberturaErroContext))]
-    partial class TesteAberturaErroContextModelSnapshot : ModelSnapshot
+    [Migration("20180122173922_Imagem")]
+    partial class Imagem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
