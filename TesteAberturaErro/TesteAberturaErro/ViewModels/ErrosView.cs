@@ -9,7 +9,8 @@ using TesteAberturaErro.Models;
 namespace TesteAberturaErro.ViewModels
 {
     public class ErrosView
-    {     
+    {
+
         public Erros Erros{ get; set; }
         public IFormFile Img { get; set; }
     }

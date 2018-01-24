@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,8 @@ namespace TesteAberturaErro.Controllers
     {
         private readonly TesteAberturaErroContext context;
         private readonly IHostingEnvironment hostingEnvironment;
+
+        //public IFormFile Img;
 
         public ErrosController(TesteAberturaErroContext context, IHostingEnvironment environment)
         {
@@ -72,7 +75,7 @@ namespace TesteAberturaErro.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ErrosView model, Erros erros)
+        public async Task<IActionResult> Create(ErrosView model)
         {
 
             if (model.Img != null)
@@ -91,7 +94,7 @@ namespace TesteAberturaErro.Controllers
                 await context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(erros);
+            return View(model.Erros);
 
         }
 
@@ -111,7 +114,6 @@ namespace TesteAberturaErro.Controllers
             {
                 return NotFound();
             }
-
             var erros = await context.Erros.SingleOrDefaultAsync(m => m.IdErro == id);
             if (erros == null)
             {
@@ -120,10 +122,11 @@ namespace TesteAberturaErro.Controllers
             return View(erros);
         }
 
+
         // POST: Erros/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("IdErro,Titulo,Severidade,Descricao,Produto,DataHora,Email,Imagem")] Erros erros)
         {
@@ -153,6 +156,53 @@ namespace TesteAberturaErro.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(erros);
+        }*/
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Erros erros, IFormFile Img)
+        {
+            
+            if (id != erros.IdErro)
+            //if (id != model.Erros.IdErro)
+            {
+                return NotFound();
+            }
+
+            if (Img != null)
+            {
+                var fileName = GetUniqueName(Img.FileName);
+                var uploads = Path.Combine(hostingEnvironment.WebRootPath, "uploads");
+                var filePath = Path.Combine(uploads, fileName);
+                Img.CopyTo(new FileStream(filePath, FileMode.Create));
+                erros.Imagem = fileName; // Set the file name
+            }
+
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    context.Update(erros);
+                    //context.Update(model.Erros);
+                    await context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ErrosExists(erros.IdErro))
+                    //if (!ErrosExists(model.Erros.IdErro))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(erros);
+            //return View(model.Erros);
         }
 
         // GET: Erros/Delete/5
